@@ -4,6 +4,7 @@ import edu.mintic.serviceg25.entidades.Empleado;
 import edu.mintic.serviceg25.excepciones.EmpleadoNoEncontradoException;
 import edu.mintic.serviceg25.repositorios.EmpleadoRepository;
 import java.util.List;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,10 +26,10 @@ public class EmpleadoController {
     public List<Empleado> listaEmpleados() {
         return repository.findAll();
     }
-    
+
     @GetMapping("/empleados/{idEmpleado}")
     public Empleado getEmpleado(@PathVariable Long idEmpleado) {
-        return repository.findById(idEmpleado).orElseThrow( () ->{
+        return repository.findById(idEmpleado).orElseThrow(() -> {
             return new EmpleadoNoEncontradoException(idEmpleado);
         });
     }
@@ -53,7 +54,11 @@ public class EmpleadoController {
             return repository.save(nuevoEmpleado);
         });
     }
-    
-    
+
+    //eliminar
+    @DeleteMapping("/empleados/{idEmpleado}")
+    public void eliminarEmpleado(@PathVariable Long idEmpleado) {
+        repository.deleteById(idEmpleado);
+    }
 
 }
