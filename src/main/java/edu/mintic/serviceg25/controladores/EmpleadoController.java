@@ -4,15 +4,19 @@ import edu.mintic.serviceg25.entidades.Empleado;
 import edu.mintic.serviceg25.excepciones.EmpleadoNoEncontradoException;
 import edu.mintic.serviceg25.repositorios.EmpleadoRepository;
 import java.util.List;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@CrossOrigin(origins= "*")
 public class EmpleadoController {
 
     private final EmpleadoRepository repository;
@@ -42,6 +46,7 @@ public class EmpleadoController {
 
     //actualizar
     @PutMapping("/empleados/{idEmpleado}")
+    @ResponseStatus(HttpStatus.ACCEPTED)
     public Empleado actualizarEmpleado(@RequestBody Empleado nuevoEmpleado,
             @PathVariable Long idEmpleado) {
         return repository.findById(idEmpleado)
